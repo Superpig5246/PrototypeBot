@@ -57,5 +57,8 @@ public class RobotMap {
   public static final int SPINDIGITALINPUT1 = 2;
   public static final int SPINDIGITALINPUT2 = 3;
 
+  //Auto aim constants
+  public static final int AIMBUTTON = 1;
+
 
 }

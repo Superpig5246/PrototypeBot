@@ -16,6 +16,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.ShooterCommands;
 
@@ -62,6 +63,25 @@ public void readTarget(){
   SmartDashboard.putNumber("LimelightY", y);
   SmartDashboard.putNumber("LimelightArea", area);
 }
+
+ public void autoAim(){
+  double x = tx.getDouble(0.0);
+
+  double scaleConstant = -0.1;
+  double minValue = 0.05;
+  double motorValue = 0; 
+  //If the motor is to the right, tirn the left motor to align to the right
+  if (x>1.0){
+    motorValue = scaleConstant*x-minValue;
+    Robot.driveTrain.setLeftMotors(motorValue);
+    //IF the motor is to the left, then turn the right side to align it 
+  } else if (x<1.0){
+    motorValue = scaleConstant*x+minValue;
+    Robot.driveTrain.setRightMotors(motorValue);
+  }
+  SmartDashboard.putString("is pressed", "yes");
+ }
+
 
 public void lowerToggle(){
   if (isLow){

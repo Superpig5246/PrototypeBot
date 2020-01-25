@@ -24,6 +24,7 @@ public class OI {
   public Button lowGearButton = new JoystickButton(leftStick, RobotMap.LOWGEARBUTTON);
   public Button highGearButton = new JoystickButton(leftStick, RobotMap.HIGHGEARBUTTON);
   public Button intakeButton =  new JoystickButton(leftStick, RobotMap.INTAKEBUTTON);
+  public Button autoAimButton = new JoystickButton(rightStick, RobotMap.AIMBUTTON);
 
 
   public boolean getIntakeButton(){
@@ -36,6 +37,10 @@ public class OI {
 
  public boolean getHighGear(){
     return highGearButton.get();
+ }
+
+ public boolean getAimButton(){
+   return autoAimButton.get();
  }
 
   public double getLeftRawAxis(final int axis){
