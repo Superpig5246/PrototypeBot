@@ -25,7 +25,9 @@ public class OI {
   public Button highGearButton = new JoystickButton(leftStick, RobotMap.HIGHGEARBUTTON);
   public Button intakeButton =  new JoystickButton(leftStick, RobotMap.INTAKEBUTTON);
   public Button autoAimButton = new JoystickButton(rightStick, RobotMap.AIMBUTTON);
-
+  public Button spinThreeTimes = new JoystickButton(rightStick, RobotMap.SPINTHREETIMESBUTTON);
+  public Button colorButton = new JoystickButton(rightStick, RobotMap.COLORBUTTON);
+  public Button wenchButton = new JoystickButton(leftStick, RobotMap.WENCHBUTTON);
 
   public boolean getIntakeButton(){
     return intakeButton.get();
@@ -43,6 +45,15 @@ public class OI {
    return autoAimButton.get();
  }
 
+ public boolean getColorButton(){
+   return colorButton.get();
+ }
+ public boolean getSpinThreeButton(){
+   return spinThreeTimes.get();
+ }
+ public boolean getWenchButton(){
+   return wenchButton.get();
+ }
   public double getLeftRawAxis(final int axis){
     return leftStick.getRawAxis(axis);
   }
@@ -50,6 +61,8 @@ public class OI {
   public double getRightRawAxis(final int axis){
     return rightStick.getRawAxis(axis);
   }
+
+
 
 
   

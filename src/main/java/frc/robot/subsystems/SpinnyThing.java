@@ -9,13 +9,17 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.RobotMap;
+import frc.robot.commands.SpinnyCommands;
+
+import com.revrobotics.CANSparkMax;
 //import edu.wpi.first.wpilibj.Encoder;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -37,7 +41,7 @@ public class SpinnyThing extends Subsystem {
   private final Color Green = ColorMatch.makeColor(0.197, 0.561, 0.240);
   private final Color Red = ColorMatch.makeColor(0.561, 0.232, 0.114);
   private final Color Yellow = ColorMatch.makeColor(0.361, 0.524, 0.113);
-  private Victor spinnyMotor = new Victor(RobotMap.SPINNYMOTORPORT);
+  public CANSparkMax spinnyMotor = new CANSparkMax(RobotMap.SPINNYMOTORID, MotorType.kBrushless);
   //Creating a timer
   private Timer timer = new Timer();
 
@@ -50,7 +54,6 @@ public String getColor(){
     colorMatch.addColorMatch(Yellow);
     Color detectedColor = colorSensor.getColor();
     ColorMatchResult match = colorMatch.matchClosestColor(detectedColor);
-
     if (match.color == Blue) {
         return "Blue";
       } else if (match.color == Red) {
@@ -63,7 +66,12 @@ public String getColor(){
         return "Unknown";
       }
 }
-
+public void motorOn(){
+  spinnyMotor.set(RobotMap.SPINNYMOTORSPEED);
+}
+public void motorOff(){
+  spinnyMotor.set(0);
+}
 public void switchColor(){
     timer.start();
     while(timer.get()<=RobotMap.SPINTIME)
@@ -74,7 +82,6 @@ public void switchColor(){
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new SpinnyCommands());
   }
 }

@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.SpinnyThing;
 
 
 /**
@@ -29,6 +31,10 @@ public class Robot extends TimedRobot {
   public static DriveTrain driveTrain = new DriveTrain();
   public static Shooter shooter = new Shooter();
   public  static Intake intake = new Intake();
+  public static SpinnyThing spinnyThing = new SpinnyThing();
+  public static Elevator elevator = new Elevator();
+
+
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -116,7 +122,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
- 
+    
   }
 
   /**

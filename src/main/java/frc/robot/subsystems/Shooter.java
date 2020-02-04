@@ -44,6 +44,7 @@ public class Shooter extends Subsystem {
  private static boolean isHigh = false;
 
  public void getData(){
+   
    SmartDashboard.putNumber("Right motor CPR", rightEncoder.getCountsPerRevolution());
    SmartDashboard.putNumber("Left motor CPR", leftEncoder.getCountsPerRevolution());
    SmartDashboard.putNumber("Right encoder velocity", rightEncoder.getVelocity());
@@ -53,7 +54,7 @@ public class Shooter extends Subsystem {
  }
 
 public void readTarget(){
-  //read values periodically
+  // //read values periodically
   double x = tx.getDouble(0.0);
   double y = ty.getDouble(0.0);
   double area = ta.getDouble(0.0);
@@ -65,9 +66,10 @@ public void readTarget(){
 }
 
  public void autoAim(){
+  SmartDashboard.putString("is pressed", "yes");
+  
   double x = tx.getDouble(0.0);
-
-  double scaleConstant = -0.1;
+  double scaleConstant = -0.01;
   double minValue = 0.05;
   double motorValue = 0; 
   //If the motor is to the right, tirn the left motor to align to the right
@@ -77,10 +79,10 @@ public void readTarget(){
     //IF the motor is to the left, then turn the right side to align it 
   } else if (x<1.0){
     motorValue = scaleConstant*x+minValue;
-    Robot.driveTrain.setRightMotors(motorValue);
+    Robot.driveTrain.setRightMotors(-motorValue);
   }
-  SmartDashboard.putString("is pressed", "yes");
- }
+  
+  }
 
 
 public void lowerToggle(){
@@ -91,8 +93,8 @@ public void lowerToggle(){
   } else {
     rightMotor.set(-RobotMap.LOWGEARPERCENT);
     leftMotor.set(RobotMap.LOWGEARPERCENT);
-    
     isLow=true;
+    
   }
 }
 
@@ -104,13 +106,17 @@ public void highToggle (){
     } else {
       rightMotor.set(-RobotMap.LOWGEARPERCENT);
       leftMotor.set(RobotMap.LOWGEARPERCENT);
-    }
+    } 
     isHigh = false;
   } else {
     rightMotor.set(-RobotMap.HIGHGEARPERCENT);
     leftMotor.set(RobotMap.HIGHGEARPERCENT);
     isHigh = true; 
   }
+}
+public int findDistance(){
+  //d = (h2-h1) / tan(a1+a2)
+  return 0;
 }
 public Shooter (){
   

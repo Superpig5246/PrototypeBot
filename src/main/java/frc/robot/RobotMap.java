@@ -50,15 +50,22 @@ public class RobotMap {
   public static final int DIGITALSOURCEB = 1;
 
   //Map for Spinny
-  public static final int SPINNYMOTORPORT = 4;
+  public static final int SPINNYMOTORID = 4;
   public static final double SPINTIME = 2;
   public static final double SPINNYMOTORSPEED = .8;
-  //Change these as well because I have no idea what they're for
-  public static final int SPINDIGITALINPUT1 = 2;
-  public static final int SPINDIGITALINPUT2 = 3;
+  public static final int SPINTHREETIMESBUTTON = 2;
+  public static final int COLORBUTTON = 3;  
+
 
   //Auto aim constants
   public static final int AIMBUTTON = 1;
+  public static final int SPINCOUNTVALUE = 0;
+
+  //elevator constants
+  public static final int WENCHPORT = 2;
+  public static final double WENCHMOTORSPEED = 1;
+  public static final int WENCHBUTTON = 3;
+
 
 
 }
