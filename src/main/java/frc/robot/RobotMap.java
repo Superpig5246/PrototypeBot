@@ -58,12 +58,12 @@ public class RobotMap {
 
 
   //Auto aim constants
-  public static final int AIMBUTTON = 1;
+  public static final int AIMBUTTON = 3;
   public static final int SPINCOUNTVALUE = 0;
 
   //elevator constants
   public static final int WENCHPORT = 2;
-  public static final double WENCHMOTORSPEED = 1;
+  public static final double WENCHMOTORSPEED = .1;
   public static final int WENCHBUTTON = 3;
 
 

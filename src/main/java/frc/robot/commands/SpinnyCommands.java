@@ -50,7 +50,7 @@ public class SpinnyCommands extends Command {
 
   private void spinThrice(){
     
-    if(Robot.m_oi.getSpinThreeButton()){
+    while(Robot.m_oi.getSpinThreeButton()){
       Robot.spinnyThing.motorOn();
       if(Robot.spinnyThing.getColor().equals("Blue")){
         spinCount++;

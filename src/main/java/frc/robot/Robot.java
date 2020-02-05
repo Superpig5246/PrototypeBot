@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -114,6 +115,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    
   } 
 
   /**
@@ -122,7 +124,12 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    
+    SmartDashboard.putString("Color", spinnyThing.getColor());
+    // System.out.println(spinnyThing.getColor());
+    // System.out.println("hi");
+    if(spinnyThing.getColor().equals("Unknown")){
+      driveTrain.setLeftMotors(.1);
+    }
   }
 
   /**
