@@ -66,8 +66,6 @@ public void readTarget(){
 }
 
  public void autoAim(){
-  SmartDashboard.putString("is pressed", "yes");
-  
   double x = tx.getDouble(0.0);
   double scaleConstant = -0.01;
   double minValue = 0.10;

@@ -66,6 +66,11 @@ public class RobotMap {
   public static final double WENCHMOTORSPEED = .1;
   public static final int WENCHBUTTON = 3;
 
+  //Autonomous constants
+  public static final double AUTONOMOUSTURNSPEED = .5;
+  public static final double AUTOSHOOTIME = 2;
+  public static final double DRIVEBACKTIME = 2;
+
 
 
 }

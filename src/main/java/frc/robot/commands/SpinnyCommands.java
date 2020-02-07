@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 
 public class SpinnyCommands extends Command {
   static int spinCount = 0; 
+  private boolean isBlue = false;
   public SpinnyCommands() {
    requires(Robot.spinnyThing);
   }
@@ -52,8 +53,11 @@ public class SpinnyCommands extends Command {
     
     while(Robot.m_oi.getSpinThreeButton()){
       Robot.spinnyThing.motorOn();
-      if(Robot.spinnyThing.getColor().equals("Blue")){
+      if(Robot.spinnyThing.getColor().equals("Blue") && isBlue==false){
         spinCount++;
+        isBlue=true;
+      } else if (!Robot.spinnyThing.getColor().equals("Blue")) {
+        isBlue = false;
       }
       if(spinCount>=RobotMap.SPINCOUNTVALUE){
         Robot.spinnyThing.motorOff();
@@ -65,7 +69,7 @@ public class SpinnyCommands extends Command {
 private void spinToColor(){
 String gameData;
 gameData = DriverStation.getInstance().getGameSpecificMessage();
-if(Robot.m_oi.getColorButton()){
+while(Robot.m_oi.getColorButton()){
   if(gameData.length() > 0)
   {
     switch (gameData.charAt(0))
