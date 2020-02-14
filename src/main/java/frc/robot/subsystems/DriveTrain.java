@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -19,6 +20,7 @@ import frc.robot.commands.tankDrive;
  * Add your docs here.
  */
 public class DriveTrain extends Subsystem {
+  Timer timer = new Timer();
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   NetworkTableEntry tx = table.getEntry("tx");
   NetworkTableEntry ty = table.getEntry("ty");
@@ -60,8 +62,11 @@ public class DriveTrain extends Subsystem {
 
   public void spinToTarget(){
     double x = tx.getDouble(0.0);
-    while(x==0.0){
-      motorLeft1.set(RobotMap.AUTONOMOUSTURNSPEED);
+    motorLeft1.set(RobotMap.AUTONOMOUSTURNSPEED);
+    if(x!=0){
+      motorLeft1.set(0);
     }
-  }
+    }
+
+  
 }

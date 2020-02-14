@@ -45,8 +45,9 @@ public class ShooterCommands extends Command {
 
    // If half a second has passed before the last imput, the timer will read zero
     // and this will execute
-    if(Robot.m_oi.getAimButton()){
-      Robot.shooter.autoAim();
+    while(Robot.m_oi.getAimButton()){
+      //Robot.shooter.autoAim();
+      Robot.driveTrain.spinToTarget();
     }
     if(Robot.m_oi.getLowGear() && timer.get()==0){
       Robot.shooter.lowerToggle();

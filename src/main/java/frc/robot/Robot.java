@@ -29,7 +29,7 @@ import frc.robot.subsystems.SpinnyThing;
 public class Robot extends TimedRobot {
   public static OI m_oi;
 
-  Command m_autonomousCommand;
+  Command  m_autonomousCommand;
   public static DriveTrain driveTrain = new DriveTrain();
   public static Shooter shooter = new Shooter();
   public  static Intake intake = new Intake();
@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     m_oi = new OI();
-    m_autonomousCommand = new AutonomousCommand();
+   m_autonomousCommand = new AutonomousCommand();
   }
 
   /**

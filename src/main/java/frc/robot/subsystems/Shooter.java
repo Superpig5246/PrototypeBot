@@ -71,15 +71,27 @@ public void readTarget(){
   double minValue = 0.10;
   double motorValue = 0; 
   //If the motor is to the right, tirn the left motor to align to the right
+  if(x==0){
+    Robot.driveTrain.setBothMotors(0);
+  }
   if (x>1.0){
     motorValue = scaleConstant*x-minValue;
     Robot.driveTrain.setLeftMotors(motorValue);
     //IF the motor is to the left, then turn the right side to align it 
-  } if (x<1.0){
+    if (x<1.0){
+      Robot.driveTrain.setLeftMotors(0);
+    }
+  }  
+  if (x<1.0){
     motorValue = scaleConstant*x+minValue;
     Robot.driveTrain.setRightMotors(-motorValue);
+ if(x>1.0)
+    Robot.driveTrain.setRightMotors(0);
+  }  
+ 
+  if (x>=0 && x<=1.0){
+    Robot.driveTrain.setBothMotors(0);
   }
-  
   }
 
 
