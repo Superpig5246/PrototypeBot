@@ -71,6 +71,10 @@ public class RobotMap {
   public static final double AUTOSHOOTIME = 2;
   public static final double DRIVEBACKTIME = 2;
 
-
+  //Autonomous times
+  public static final int PHASE2TIME = 3;
+  public static final int PHASE3TIME = 5;
+  public static final int PHASE4TIME = 8;
+  public static final int PHASE5TIME = 10;
 
 }

@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -35,7 +36,7 @@ public class Robot extends TimedRobot {
   public  static Intake intake = new Intake();
   public static SpinnyThing spinnyThing = new SpinnyThing();
   public static Elevator elevator = new Elevator();
-
+  private static Timer autoTimer = new Timer();
 
   /**
    * This function is run when the robot is first started up and should be
@@ -44,7 +45,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     m_oi = new OI();
-   m_autonomousCommand = new AutonomousCommand();
+   //m_autonomousCommand = new AutonomousCommand();
   }
 
   /**
@@ -98,6 +99,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.start();
     }
+    autoTimer.start();
   }
 
   /**
@@ -106,7 +108,19 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
-  }
+    if(autoTimer.get()<RobotMap.PHASE2TIME){
+      driveTrain.spinToTarget();
+    } else if (autoTimer.get()>=RobotMap.PHASE2TIME && autoTimer.get()<RobotMap.PHASE3TIME){
+      shooter.autoAim();
+    } else if (autoTimer.get()>=RobotMap.PHASE3TIME && autoTimer.get()<RobotMap.PHASE4TIME){
+      Robot.shooter.highToggle();
+    } else if (autoTimer.get()>=RobotMap.PHASE4TIME && autoTimer.get()<RobotMap.PHASE5TIME){
+      Robot.shooter.lowerToggle();
+      Robot.driveTrain.setBothMotors(0.3);
+    } else if (autoTimer.get()>=RobotMap.PHASE5TIME){
+      autoTimer.stop();
+    }
+  } 
 
   @Override
   public void teleopInit() {
