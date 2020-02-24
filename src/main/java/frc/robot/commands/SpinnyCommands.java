@@ -18,11 +18,13 @@ public class SpinnyCommands extends Command {
   private boolean isBlue = false;
   public SpinnyCommands() {
    requires(Robot.spinnyThing);
+   requires(Robot.gearboxes);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.spinnyThing.extendOut();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -30,6 +32,7 @@ public class SpinnyCommands extends Command {
   protected void execute() {
     spinThrice();
     spinToColor();
+    Robot.spinnyThing.quit();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -41,17 +44,20 @@ public class SpinnyCommands extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.spinnyThing.rectract();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.spinnyThing.rectract();
   }
 
   private void spinThrice(){
     
     while(Robot.m_oi.getSpinThreeButton()){
+      Robot.gearboxes.lowGear();
       Robot.spinnyThing.motorOn();
       if(Robot.spinnyThing.getColor().equals("Blue") && isBlue==false){
         spinCount++;
@@ -61,6 +67,7 @@ public class SpinnyCommands extends Command {
       }
       if(spinCount>=RobotMap.SPINCOUNTVALUE){
         Robot.spinnyThing.motorOff();
+        Robot.gearboxes.highGear();
       }
     }
   }
@@ -76,23 +83,35 @@ while(Robot.m_oi.getColorButton()){
     {
       case 'B' :
       Robot.spinnyThing.motorOn();
-      if(Robot.spinnyThing.getColor().equals("Red"))
+      Robot.gearboxes.lowGear();
+      if(Robot.spinnyThing.getColor().equals("Red")){
         Robot.spinnyThing.motorOff();
+        Robot.gearboxes.highGear();
+      }
         break;
       case 'G' :
       Robot.spinnyThing.motorOn();
-      if(Robot.spinnyThing.getColor().equals("Yellow"))
+      Robot.gearboxes.lowGear();
+      if(Robot.spinnyThing.getColor().equals("Yellow")){
         Robot.spinnyThing.motorOff();
+        Robot.gearboxes.highGear();
+      }
         break;
       case 'R' :
       Robot.spinnyThing.motorOn();
-      if(Robot.spinnyThing.getColor().equals("Blue"))
+      Robot.gearboxes.lowGear();
+      if(Robot.spinnyThing.getColor().equals("Blue")){
         Robot.spinnyThing.motorOff();
+        Robot.gearboxes.highGear();
+      }
         break;
       case 'Y' :
       Robot.spinnyThing.motorOn();
-      if(Robot.spinnyThing.getColor().equals("Green"))
+      Robot.gearboxes.lowGear();
+      if(Robot.spinnyThing.getColor().equals("Green")){
         Robot.spinnyThing.motorOff();
+        Robot.gearboxes.highGear();
+      }
         break;
       default :
         SmartDashboard.putString("ERROR", "ERROR3467654 INVALID COLOR");

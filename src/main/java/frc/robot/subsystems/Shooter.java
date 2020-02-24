@@ -66,6 +66,7 @@ public void readTarget(){
 }
 
  public void autoAim(){
+  if (Robot.isBrown == false){
   double x = tx.getDouble(0.0);
   double scaleConstant = -0.01;
   double minValue = 0.10;
@@ -92,10 +93,12 @@ public void readTarget(){
   if (x>=0 && x<=1.0){
     Robot.driveTrain.setBothMotors(0);
   }
+}
   }
 
 
 public void lowerToggle(){
+  if(Robot.isBrown==false){
   if (isLow){
     rightMotor.set(0);
     leftMotor.set(0);
@@ -107,8 +110,10 @@ public void lowerToggle(){
     
   }
 }
+}
 
 public void highToggle (){
+  if(Robot.isBrown==false){
   if (isHigh){
     if (isLow==false){
       rightMotor.set(0);
@@ -124,6 +129,7 @@ public void highToggle (){
     isHigh = true; 
   }
 }
+}
 public int findDistance(){
   //d = (h2-h1) / tan(a1+a2)
   return 0;
@@ -135,4 +141,12 @@ public Shooter (){
   public void initDefaultCommand() {
     setDefaultCommand(new ShooterCommands());
   }
+
+public void quit(){
+  if(Robot.isBrown){
+    leftMotor.set(0);
+    rightMotor.set(0);
+
+  }
+}
 }

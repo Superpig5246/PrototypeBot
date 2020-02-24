@@ -16,6 +16,7 @@ import frc.robot.RobotMap;
 public class ShooterCommands extends Command {
   public ShooterCommands() {
     requires(Robot.shooter); 
+    requires(Robot.gearboxes);
     
   }
   private Timer timer = new Timer();
@@ -34,6 +35,7 @@ public class ShooterCommands extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.shooter.quit();
     //resets timer if one second has passed to ensure that the button input is not read twice
   if (timer.get()>=0.5){
     timer.stop();
@@ -46,15 +48,16 @@ public class ShooterCommands extends Command {
    // If half a second has passed before the last imput, the timer will read zero
     // and this will execute
     while(Robot.m_oi.getAimButton()){
-      //Robot.shooter.autoAim();
-      Robot.driveTrain.spinToTarget();
+      Robot.shooter.autoAim();
     }
-    if(Robot.m_oi.getLowGear() && timer.get()==0){
-      Robot.shooter.lowerToggle();
-      timer.start();
-    }
-    if(Robot.m_oi.getHighGear() && timer.get()==0){
+    // if(Robot.m_oi.getLowGear() && timer.get()==0){
+    //   Robot.shooter.lowerToggle();
+    //   Robot.gearboxes.lowGear();
+    //   timer.start();
+    // }
+    if(Robot.m_oi.getHighGear()>0 && timer.get()==0){
       Robot.shooter.highToggle();
+      Robot.gearboxes.highGear();
       timer.start();
     }
 

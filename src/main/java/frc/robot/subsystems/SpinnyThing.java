@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.RobotMap;
 import frc.robot.commands.SpinnyCommands;
+import frc.robot.Robot;
 
 import com.revrobotics.CANSparkMax;
 //import edu.wpi.first.wpilibj.Encoder;
@@ -18,8 +19,10 @@ import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -42,6 +45,7 @@ public class SpinnyThing extends Subsystem {
   private final Color Red = ColorMatch.makeColor(0.561, 0.232, 0.114);
   private final Color Yellow = ColorMatch.makeColor(0.361, 0.524, 0.113);
   public CANSparkMax spinnyMotor = new CANSparkMax(RobotMap.SPINNYMOTORID, MotorType.kBrushless);
+  private static DoubleSolenoid startExtender = new DoubleSolenoid(RobotMap.EXTENDERPORT1, RobotMap.EXTENDERPORT2);
   //Creating a timer
   private Timer timer = new Timer();
 
@@ -67,21 +71,39 @@ public String getColor(){
       }
 }
 public void motorOn(){
+  if(Robot.isBrown==false)
   spinnyMotor.set(RobotMap.SPINNYMOTORSPEED);
 }
 public void motorOff(){
   spinnyMotor.set(0);
 }
 public void switchColor(){
+  if(Robot.isBrown==false){
     timer.start();
     while(timer.get()<=RobotMap.SPINTIME)
         spinnyMotor.set(RobotMap.SPINNYMOTORSPEED);
     timer.stop();
-    timer.reset();;
+    timer.reset();
+  }
+}
+public void extendOut(){
+  if(Robot.isBrown==false)
+  startExtender.set(Value.kForward);
+}
+public void rectract(){
+  if(Robot.isBrown==false)
+  startExtender.set(Value.kReverse);
 }
 
   @Override
   public void initDefaultCommand() {
     setDefaultCommand(new SpinnyCommands());
   }
+
+  public void quit(){
+    if (Robot.isBrown){
+     spinnyMotor.set(0);
+    }
+  }
+
 }

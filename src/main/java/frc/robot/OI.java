@@ -8,6 +8,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -18,42 +20,71 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
 
-
+//add high gear and low gear
   private final Joystick leftStick = new Joystick(RobotMap.LEFTSTICK);
   private final Joystick rightStick = new Joystick(RobotMap.RIGHTSTICK);
-  public Button lowGearButton = new JoystickButton(leftStick, RobotMap.LOWGEARBUTTON);
-  public Button highGearButton = new JoystickButton(leftStick, RobotMap.HIGHGEARBUTTON);
-  public Button intakeButton =  new JoystickButton(leftStick, RobotMap.INTAKEBUTTON);
-  public Button autoAimButton = new JoystickButton(rightStick, RobotMap.AIMBUTTON);
-  public Button spinThreeTimes = new JoystickButton(rightStick, RobotMap.SPINTHREETIMESBUTTON);
-  public Button colorButton = new JoystickButton(rightStick, RobotMap.COLORBUTTON);
-  public Button wenchButton = new JoystickButton(leftStick, RobotMap.WENCHBUTTON);
+  public XboxController xBox = new XboxController(RobotMap.XBOX);
 
-  public boolean getIntakeButton(){
-    return intakeButton.get();
+  public Button highDriveGearL1 = new JoystickButton(leftStick, RobotMap.LOWGEARBUTTON); //2
+  public Button lowDriveGearL = new JoystickButton(leftStick, RobotMap.WENCHBUTTON); //3
+  public Button highDriveGearL2 = new JoystickButton(leftStick, RobotMap.HIGHGEARBUTTON); //4
+
+  public Button highDriveGearR1 = new JoystickButton(rightStick, RobotMap.SPINTHREETIMESBUTTON); //2
+  public Button lowDriveGearR = new JoystickButton(rightStick, RobotMap.AIMBUTTON); //3
+  public Button highDriveGearR2 = new JoystickButton(rightStick, RobotMap.COLORBUTTON);//4
+
+  public boolean getHighDriveR1(){
+    return highDriveGearR1.get();
+  }
+  public boolean getHighDriveR2(){
+    return highDriveGearR2.get();
+  }
+  public boolean getHighDriveL1(){
+    return highDriveGearL1.get();
+  }
+  public boolean getHighDriveL2(){
+    return highDriveGearL2.get();
+  }
+  public boolean getLowDriveL(){
+    return lowDriveGearL.get();
+  }
+  public boolean getLowDriveR(){
+    return lowDriveGearR.get();
+  }
+  public double getIntakeButton() {
+    return xBox.getTriggerAxis(Hand.kLeft);
   }
   
-  public boolean getLowGear(){
-    return lowGearButton.get();
-  }
+  // public boolean getLowGear(){
+  //   return lowGearButton.get();
+  // }
 
- public boolean getHighGear(){
-    return highGearButton.get();
+ public double getHighGear() {
+  return xBox.getTriggerAxis(Hand.kRight);
  }
 
  public boolean getAimButton(){
-   return autoAimButton.get();
+  return xBox.getBumper(Hand.kRight);
  }
 
  public boolean getColorButton(){
-   return colorButton.get();
+  return xBox.getYButton();
  }
  public boolean getSpinThreeButton(){
-   return spinThreeTimes.get();
+   return xBox.getBButton();
  }
  public boolean getWenchButton(){
-   return wenchButton.get();
+   return xBox.getAButton();
  }
+ public boolean getJoshButton(){
+  return xBox.getXButton();
+}
+public boolean getElevatorUp(){
+  return xBox.getBumper(Hand.kRight);
+}
+public boolean getElevatorDown(){
+  return xBox.getBumper(Hand.kLeft);
+}
   public double getLeftRawAxis(final int axis){
     return leftStick.getRawAxis(axis);
   }
@@ -66,7 +97,7 @@ public class OI {
 
 
   
-
+  // Before u create buttons, you must sing the hula hoop song and bathe yourslef in code
   //// CREATING BUTTONS
   // One type of button is a joystick button which is any button on a
   //// joystick.

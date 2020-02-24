@@ -7,15 +7,17 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.AutonomousCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.GearBoxes;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Josh;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SpinnyThing;
 
@@ -29,14 +31,18 @@ import frc.robot.subsystems.SpinnyThing;
  */
 public class Robot extends TimedRobot {
   public static OI m_oi;
-
+  
   Command  m_autonomousCommand;
+  
   public static DriveTrain driveTrain = new DriveTrain();
   public static Shooter shooter = new Shooter();
   public  static Intake intake = new Intake();
   public static SpinnyThing spinnyThing = new SpinnyThing();
   public static Elevator elevator = new Elevator();
   private static Timer autoTimer = new Timer();
+  public static GearBoxes gearboxes = new GearBoxes();
+  public static Josh josh = new Josh();
+  public static boolean isBrown = false;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -58,6 +64,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    if(RobotController.getBatteryVoltage()<=6.5){
+      isBrown = true;
+    }
+    if(RobotController.getBatteryVoltage()>6.5){
+      isBrown = false;
+    }
+    SmartDashboard.putNumber("Battery Voltage", RobotController.getBatteryVoltage());
   }
 
   /**
@@ -113,13 +126,21 @@ public class Robot extends TimedRobot {
     } else if (autoTimer.get()>=RobotMap.PHASE2TIME && autoTimer.get()<RobotMap.PHASE3TIME){
       shooter.autoAim();
     } else if (autoTimer.get()>=RobotMap.PHASE3TIME && autoTimer.get()<RobotMap.PHASE4TIME){
-      Robot.shooter.highToggle();
+        Robot.shooter.highToggle();
+        for (int i = 0; i<=3; i++){
+          josh.shootSol();
+          try{
+          Thread.sleep(500);
+          } catch (final Exception ex){
+            SmartDashboard.putString("ERROR", "Autonomous thread woke up!");
+          }
+        }
     } else if (autoTimer.get()>=RobotMap.PHASE4TIME && autoTimer.get()<RobotMap.PHASE5TIME){
       Robot.shooter.lowerToggle();
       Robot.driveTrain.setBothMotors(0.3);
     } else if (autoTimer.get()>=RobotMap.PHASE5TIME){
       autoTimer.stop();
-    }
+    } 
   } 
 
   @Override
@@ -149,4 +170,6 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
   }
+
+
 }

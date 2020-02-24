@@ -24,6 +24,7 @@ public class RobotMap {
   //Map for controllers
   public static final int LEFTSTICK = 0;
   public static final int RIGHTSTICK = 1;
+  public static final int XBOX = 2;
 
   //Map for shooter
   public static final double LOWGEARPERCENT = 0.2;
@@ -44,18 +45,14 @@ public class RobotMap {
   public static final double INTAKEMOTORSPEEDOUT = 1;
   public static final double INTAKEMOTORSOEEDIN = 0;
 
-
-  //find out what this is and change it!!
-  public static final int DIGITALSOURCEA = 0;
-  public static final int DIGITALSOURCEB = 1;
-
   //Map for Spinny
   public static final int SPINNYMOTORID = 4;
   public static final double SPINTIME = 2;
   public static final double SPINNYMOTORSPEED = .8;
   public static final int SPINTHREETIMESBUTTON = 2;
-  public static final int COLORBUTTON = 3;  
-
+  public static final int COLORBUTTON = 4;  
+  public static final int EXTENDERPORT1 = 10;
+  public static final int EXTENDERPORT2 = 11;
 
   //Auto aim constants
   public static final int AIMBUTTON = 3;
@@ -63,8 +60,10 @@ public class RobotMap {
 
   //elevator constants
   public static final int WENCHPORT = 2;
+  public static final int ELEVATORPORT = 3;
   public static final double WENCHMOTORSPEED = .1;
   public static final int WENCHBUTTON = 3;
+  public static final double ELEVATORSPEED = .4;
 
   //Autonomous constants
   public static final double AUTONOMOUSTURNSPEED = .3;
@@ -76,5 +75,21 @@ public class RobotMap {
   public static final int PHASE3TIME = 5;
   public static final int PHASE4TIME = 8;
   public static final int PHASE5TIME = 10;
+  
+  //Gearbox constants
+  public static final int GEARSOL1CHANNEL1 = 4;
+  public static final int GEARSOL1CHANNEL2 = 5;
+  public static final int GEARSOL2CHANNEL1 = 6;
+  public static final int GEARSOL2CHANNEL2 = 7;
+
+  //Josh constants
+  public static final int JOSHMOTOR = 1;
+  public static final int JOSHSOLPORT1 = 8;
+  public static final int JOSHSOLPORT2 = 9;
+  public static final double JOSHMOTORSPEED = .3;
+  public static final int JOSHBUTTON = 1;
+
+
+
 
 }

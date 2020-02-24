@@ -7,13 +7,16 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class IntakeCommands extends Command {
   public IntakeCommands() {
     requires(Robot.intake);
+    requires(Robot.gearboxes);
   }
+  Timer timer = new Timer();
 
   // Called just before this Command runs the first time
   @Override
@@ -23,8 +26,19 @@ public class IntakeCommands extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Robot.m_oi.getIntakeButton()){
+    Robot.intake.quit();
+    if (timer.get()>=0.5){
+      timer.stop();
+      timer.reset();
+    }
+    if(Robot.m_oi.getIntakeButton()>0 && timer.get()==0){
       Robot.intake.intakeState();
+      timer.start();
+      if(Robot.intake.getIntakeState()==true){
+        Robot.gearboxes.highGear();
+      } else {
+        Robot.gearboxes.lowGear();
+      }
     }
   }
 
@@ -45,5 +59,6 @@ public class IntakeCommands extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.intake.intakeIn();
   }
 }

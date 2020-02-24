@@ -13,6 +13,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.tankDrive;
 
@@ -25,6 +26,7 @@ public class DriveTrain extends Subsystem {
   NetworkTableEntry tx = table.getEntry("tx");
   NetworkTableEntry ty = table.getEntry("ty");
   NetworkTableEntry ta = table.getEntry("ta");
+
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
@@ -46,27 +48,39 @@ public class DriveTrain extends Subsystem {
 
   public void setLeftMotors(double speed){
     //May or may not work; check which one is actually negative
-    motorLeft1.set(-speed);
+    if(Robot.isBrown==false)
+      motorLeft1.set(-speed);
    // motorLeft2.set(-speed);
   }
 
   public void setRightMotors(double speed){
-    motorRight1.set(speed);
+    if(Robot.isBrown)
+      motorRight1.set(speed);
     //motorRight2.set(speed);
   }
 
   public void setBothMotors(double speed){
-    motorRight1.set(speed);
-    motorLeft1.set(-speed);
+    if(Robot.isBrown==false){
+      motorRight1.set(speed);
+      motorLeft1.set(-speed);
+    }
   }
 
   public void spinToTarget(){
+    if (Robot.isBrown==false){
     double x = tx.getDouble(0.0);
     motorLeft1.set(RobotMap.AUTONOMOUSTURNSPEED);
+    motorRight1.set(-RobotMap.AUTONOMOUSTURNSPEED);
     if(x!=0){
       motorLeft1.set(0);
     }
     }
-
+  }
+public void quit(){
+  if(Robot.isBrown){
+    motorLeft1.set(0);
+    motorRight1.set(0);
+  }
+}
   
 }

@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.ElevatorCommands;
 
@@ -17,9 +18,12 @@ import frc.robot.commands.ElevatorCommands;
  */
 public class Elevator extends Subsystem {
   private Victor wenchMotor = new Victor(RobotMap.WENCHPORT);
+  private Victor elevatorMotor = new Victor(RobotMap.ELEVATORPORT);
   private boolean isOn = false; 
+  
 
   public void setMotor(){
+  if(Robot.isBrown==false){
     if(isOn==false){
       wenchMotor.set(RobotMap.WENCHMOTORSPEED);
       isOn=true;
@@ -28,9 +32,26 @@ public class Elevator extends Subsystem {
       isOn=false;
     }
   }
-
+}
+  
+  public void elevatorUp(){
+    if(Robot.isBrown==false)
+        elevatorMotor.set(RobotMap.ELEVATORSPEED);
+  }
+  public void elevatorDown(){
+    if(Robot.isBrown==false)
+      elevatorMotor.set(-RobotMap.ELEVATORSPEED);
+  }
+ 
   @Override
   public void initDefaultCommand() {
     setDefaultCommand(new ElevatorCommands());
+  }
+
+  public void quit(){
+    if(Robot.isBrown){
+      wenchMotor.set(0);
+      elevatorMotor.set(0);
+    }
   }
 }

@@ -7,17 +7,16 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-
-
-public class tankDrive extends Command {
-  public tankDrive() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.driveTrain);
+public class JoshCommands extends Command {
+  public JoshCommands() {
+    Robot.josh.quit();
+     requires(Robot.josh);
   }
+  Timer timer = new Timer();
 
   // Called just before this Command runs the first time
   @Override
@@ -27,12 +26,15 @@ public class tankDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveTrain.quit();
-    double leftStickY = Robot.m_oi.getLeftRawAxis(1);
-    double rightStickY = Robot.m_oi.getRightRawAxis(1);
-
-    Robot.driveTrain.setLeftMotors(leftStickY);
-    Robot.driveTrain.setRightMotors(rightStickY);
+    if (timer.get()>=0.5){
+      timer.stop();
+      timer.reset();
+    }
+    Robot.josh.motorMove();
+    if (Robot.m_oi.getJoshButton() && timer.get()==0){
+      Robot.josh.shootSol();
+      timer.start();
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -44,14 +46,13 @@ public class tankDrive extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.driveTrain.setLeftMotors(0);
-    Robot.driveTrain.setRightMotors(0);
+    Robot.josh.motorStop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
+    Robot.josh.motorStop();
   }
 }
